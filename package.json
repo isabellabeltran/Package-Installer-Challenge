@@ -1,0 +1,24 @@
+{
+  "name": "package-installer-challenge",
+  "version": "1.0.0",
+  "description": "A program that will handle the installation of dependencies ",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isabellabeltran/Package-Installer-Challenge.git"
+  },
+  "author": "Isabella Beltran/Pluralsight",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isabellabeltran/Package-Installer-Challenge/issues"
+  },
+  "homepage": "https://github.com/isabellabeltran/Package-Installer-Challenge#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
