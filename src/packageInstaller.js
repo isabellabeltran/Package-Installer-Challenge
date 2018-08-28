@@ -1,12 +1,15 @@
-const PackageInstaller = (pkgs) => {
+module.exports = (pkgs) => {
   let packages = pkgs; 
   if (!Array.isArray(packages)) {
     throw 'It should be an array of packages';
   }
   for (let i = 0; i < packages.length; i++) {
+    console.log(packages, packages[i]);
     if (packages[i] !== 'string') {
       throw 'Each package should be a string'; 
     }
   }
-  
+  return []; 
 }
+
+
