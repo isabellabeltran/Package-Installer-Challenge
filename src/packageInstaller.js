@@ -11,10 +11,11 @@ const PackageInstaller = (packagesList) => {
   }
   const dictionary = CreateDictionary(packagesList); 
   const verifyCycles = CheckCycles(dictionary); 
-  if (verifyCycles) {
-    return 'It should not contain cycles between packages';
+  if (Array.isArray(verifyCycles)) {
+    return `It should not contain cycles: ${verifyCycles.join(', ')}`;
+  } else {
+    return verifyCycles;
   }
-  
 }
 
 const CreateDictionary = (packages) => {
@@ -36,7 +37,9 @@ const CreateDictionary = (packages) => {
 
 const CheckCycles = (dictionary) => {
   let visited = {}; 
-  let result = false; 
+  let result; 
+  let sortedPackages = [];
+  let cycle = false; 
 
   const verifyCycle = (package, dependencies) => {
     if (visited[package]) {
@@ -46,37 +49,29 @@ const CheckCycles = (dictionary) => {
     let dependency = dictionary[package]; 
     for(let j = 0; j < dependency.length; j++) {
       if (dependencies.indexOf(dependency[j]) >= 0) {
-        result = true; 
-        return result;  
+        cycle = true; 
+        result = dependencies; 
+        return cycle;   
       }
       verifyCycle(dependency[j], dependencies);
     }
     visited[package] = true; 
+    sortedPackages.push(package); 
   }
 
   let packages = Object.keys(dictionary); 
   for (let i = 0; i < packages.length; i++) {
     verifyCycle(packages[i],[]);
   }
-  return result; 
+  if (cycle) {
+    return result; 
+  } else {
+    return sortedPackages.join(', ');
+  }
 }
-
-console.log(PackageInstaller(['KittenService: ','Leetmeme: Cyberportal','Cyberportal: Ice','CamelCaser:KittenService','Fraudstream: Leetmeme','Ice: ']));
 
 module.exports = {
   PackageInstaller, 
-  CreateDictionary
+  CreateDictionary,
+  CheckCycles
 }
-
-  /**
-   * I => object 
-   * O => boolean 
-   * Pseudocode 
-   * visitedPackages = keep a reference for each package visited []
-   * for each package name in the dictionary 
-   * Check that the package on visitedPackages is not repeated
-   *  if is repeated return true
-   *  else push into visitedPackages and check it's dependencies 
-   * 
-   * 
-  */
